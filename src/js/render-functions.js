@@ -2,6 +2,9 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import { totalPages, pages } from './pixabay-api';
+
+//
 
 // Function: initialize Lightbox
 function initializeLightbox() {
@@ -44,6 +47,8 @@ export function showNotification() {
     close: true,
   });
 }
+
+//
 
 // Function: update UI
 export function updateUi(arrayImages) {
@@ -91,6 +96,15 @@ export function updateUi(arrayImages) {
 
   gallery.innerHTML = markup;
   initializeLightbox().refresh();
+}
+
+export function updateButtonUi(arrayImages) {
+  if (pages > totalPages) {
+    return iziToast.error({
+      position: 'topRight',
+      message: "We're sorry, there are no more posts to load",
+    });
+  }
 }
 
 // Function: get user input

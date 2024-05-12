@@ -293,3 +293,17 @@ button.is-disable {
     inset: 0;
   }
 }
+
+/* ExtendButton */
+
+.extentionButton {
+  display: none;
+}
+
+.div-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  margin-top: 20px;
+}

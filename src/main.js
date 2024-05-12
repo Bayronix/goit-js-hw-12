@@ -1,13 +1,14 @@
-import './js/pixabay-api';
 import { fetchImageData } from './js/pixabay-api';
-import './js/render-functions';
+import { updateButtonUi } from './js/render-functions';
 
 const refs = {
   searchForm: document.querySelector('.search-bar-form'),
   searchInput: document.querySelector('#search-bar'),
   searchButton: document.querySelector('button'),
   galleryList: document.querySelector('.gallery-list'),
+  extensionButton: document.querySelector('.extentionButton'),
 };
+
 let userSearchRequestValue = '';
 
 refs.searchInput.addEventListener('input', event => {
@@ -19,6 +20,28 @@ refs.searchForm.addEventListener('submit', event => {
   fetchImageData(userSearchRequestValue);
 });
 
-refs.searchButton.addEventListener('click', () => {
-  fetchImageData(userSearchRequestValue);
+refs.searchButton.addEventListener('click', async () => {
+  if (!userSearchRequestValue) {
+    return;
+  }
+  try {
+    const images = await fetchImageData(userSearchRequestValue);
+    updateButtonUi(images);
+
+    setTimeout(() => {
+      refs.extensionButton.classList.remove('extentionButton');
+      refs.extensionButton.classList.add('div-button');
+    }, 1000);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+refs.extensionButton.addEventListener('click', async () => {
+  try {
+    const images = await fetchImageData(userSearchRequestValue);
+    updateButtonUi(images);
+  } catch (error) {
+    console.log(error);
+  }
 });
