@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { showLoader, updateUi } from './render-functions';
 
-export let limit = 40;
+export let limit = 20;
 export let pages = 1;
 export const totalPages = Math.ceil(100 / limit);
 
@@ -16,25 +15,23 @@ export async function fetchImageData(searchRequest) {
     q: searchRequest,
     per_page: limit,
     page: pages,
-    ...urlOptions.options, // Spread other options
+    ...urlOptions.options,
   };
+
   try {
-    showLoader(true);
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
     const response = await axios.get(urlOptions.http, { params });
+
+    if (response.status !== 200) {
+      throw new Error('Network response was not ok.');
+    }
+    pages += 1;
 
     const { data } = response;
     const images = data.hits;
-    updateUi(images);
-
-    // Increment page for next request
-    pages++;
+    return images;
   } catch (error) {
-    console.error(error);
-  } finally {
-    showLoader(false);
+    console.error('Error fetching image data:', error);
+    throw error;
   }
 }
 

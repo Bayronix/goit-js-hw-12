@@ -52,10 +52,6 @@ export function showNotification() {
 
 // Function: update UI
 export function updateUi(arrayImages) {
-  if (arrayImages.length <= 0) {
-    showNotification();
-  }
-
   const gallery = document.querySelector('.gallery-list');
   const markup = arrayImages
     .map(
@@ -98,7 +94,7 @@ export function updateUi(arrayImages) {
   initializeLightbox().refresh();
 }
 
-export function updateButtonUi(arrayImages) {
+export function updateButtonUi() {
   if (pages > totalPages) {
     return iziToast.error({
       position: 'topRight',

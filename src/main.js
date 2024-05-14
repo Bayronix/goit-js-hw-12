@@ -1,5 +1,12 @@
+import './js/pixabay-api';
 import { fetchImageData } from './js/pixabay-api';
-import { updateButtonUi } from './js/render-functions';
+import './js/render-functions';
+import {
+  showNotification,
+  updateUi,
+  updateButtonUi,
+  showLoader,
+} from './js/render-functions';
 
 const refs = {
   searchForm: document.querySelector('.search-bar-form'),
@@ -11,37 +18,55 @@ const refs = {
 
 let userSearchRequestValue = '';
 
-refs.searchInput.addEventListener('input', event => {
-  userSearchRequestValue = event.target.value;
-});
-
-refs.searchForm.addEventListener('submit', event => {
+refs.searchForm.addEventListener('submit', async event => {
   event.preventDefault();
-  fetchImageData(userSearchRequestValue);
-});
-
-refs.searchButton.addEventListener('click', async () => {
-  if (!userSearchRequestValue) {
+  userSearchRequestValue = refs.searchInput.value.trim();
+  if (userSearchRequestValue === '') {
+    showNotification('Please enter a search term.');
     return;
   }
-  try {
-    const images = await fetchImageData(userSearchRequestValue);
-    updateButtonUi(images);
 
-    setTimeout(() => {
-      refs.extensionButton.classList.remove('extentionButton');
-      refs.extensionButton.classList.add('div-button');
+  showLoader(true);
+  try {
+    setTimeout(async () => {
+      try {
+        const images = await fetchImageData(userSearchRequestValue);
+        updateUi(images);
+        if (refs.galleryList.childElementCount <= 0) {
+          showNotification('No images found.');
+        }
+
+        if (refs.extensionButton) {
+          refs.extensionButton.classList.remove('extentionButton');
+          refs.extensionButton.classList.add('div-button');
+        }
+      } catch (error) {
+        console.error('Error fetching or updating images:', error);
+        showNotification('An error occurred while fetching images.');
+      } finally {
+        showLoader(false);
+      }
     }, 1000);
   } catch (error) {
-    console.log(error);
+    console.error('An unexpected error occurred.');
   }
 });
 
 refs.extensionButton.addEventListener('click', async () => {
+  showLoader(true);
   try {
-    const images = await fetchImageData(userSearchRequestValue);
-    updateButtonUi(images);
+    setTimeout(async () => {
+      try {
+        const images = await fetchImageData(userSearchRequestValue);
+        updateUi(images);
+      } catch (error) {
+        console.error('Error fetching or updating images:', error);
+        showNotification('An error occurred while fetching images.');
+      } finally {
+        showLoader(false);
+      }
+    }, 1000);
   } catch (error) {
-    console.log(error);
+    console.error('An unexpected error occurred.');
   }
 });
