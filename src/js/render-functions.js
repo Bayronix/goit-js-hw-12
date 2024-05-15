@@ -3,6 +3,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { totalPages, pages } from './pixabay-api';
+import { refs } from '../main';
 
 //
 
@@ -94,9 +95,53 @@ export function updateUi(arrayImages) {
   initializeLightbox().refresh();
 }
 
+export function updatNeweUi(arrayImages) {
+  const gallery = document.querySelector('.gallery-list');
+  const markup = arrayImages
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
+        return `<li class="image-card">
+              <a href="${largeImageURL}" class="image-card-link"><img src="${webformatURL}" width="360" height="200" class="image-card-thumb" alt="${tags}">
+                <ul class="image-card-details-list">
+                  <li class="image-card-details-list-item">
+                      <p class="image-card-details-title">Likes</p>
+                      <p class="image-card-details-text">${likes}</p>
+                  </li>
+                  <li class="image-card-details-list-item">
+                      <p class="image-card-details-title">Views</p>
+                      <p class="image-card-details-text">${views}</p>
+                  </li>
+                  <li class="image-card-details-list-item">
+                      <p class="image-card-details-title">Comments</p>
+                      <p class="image-card-details-text">${comments}</p>
+                  </li>
+                  <li class="image-card-details-list-item">
+                      <p class="image-card-details-title">Downloads</p>
+                      <p class="image-card-details-text">${downloads}</p>
+                  </li>
+                </ul>
+              </a>
+          </li>`;
+      }
+    )
+    .join('');
+
+  gallery.innerHTML += markup;
+  initializeLightbox().refresh();
+}
+
 export function updateButtonUi() {
-  if (pages > totalPages) {
-    return iziToast.error({
+  if (pages >= totalPages) {
+    refs.extensionButton.remove();
+    iziToast.error({
       position: 'topRight',
       message: "We're sorry, there are no more posts to load",
     });

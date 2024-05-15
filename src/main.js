@@ -6,9 +6,10 @@ import {
   updateUi,
   updateButtonUi,
   showLoader,
+  updatNeweUi,
 } from './js/render-functions';
 
-const refs = {
+export const refs = {
   searchForm: document.querySelector('.search-bar-form'),
   searchInput: document.querySelector('#search-bar'),
   searchButton: document.querySelector('button'),
@@ -54,19 +55,18 @@ refs.searchForm.addEventListener('submit', async event => {
 
 refs.extensionButton.addEventListener('click', async () => {
   showLoader(true);
-  try {
-    setTimeout(async () => {
-      try {
-        const images = await fetchImageData(userSearchRequestValue);
-        updateUi(images);
-      } catch (error) {
-        console.error('Error fetching or updating images:', error);
-        showNotification('An error occurred while fetching images.');
-      } finally {
-        showLoader(false);
-      }
-    }, 1000);
-  } catch (error) {
-    console.error('An unexpected error occurred.');
-  }
+
+  setTimeout(async () => {
+    try {
+      const images = await fetchImageData(userSearchRequestValue);
+      updatNeweUi(images);
+      updateButtonUi();
+    } catch (error) {
+      console.error('Error fetching or updating images:', error);
+      showNotification('An error occurred while fetching images.');
+    } finally {
+      showLoader(false);
+    }
+    console.log('1234');
+  }, 1000);
 });
