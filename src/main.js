@@ -28,38 +28,37 @@ refs.searchForm.addEventListener('submit', async event => {
   }
 
   showLoader(true);
-  try {
-    setTimeout(async () => {
-      try {
-        const images = await fetchImageData(userSearchRequestValue);
-        updateUi(images);
-        if (refs.galleryList.childElementCount <= 0) {
-          showNotification('No images found.');
-        }
-
-        if (refs.extensionButton) {
-          refs.extensionButton.classList.remove('extentionButton');
-          refs.extensionButton.classList.add('div-button');
-        }
-      } catch (error) {
-        console.error('Error fetching or updating images:', error);
-        showNotification('An error occurred while fetching images.');
-      } finally {
-        showLoader(false);
+  setTimeout(async () => {
+    try {
+      const images = await fetchImageData(userSearchRequestValue);
+      updateUi(images);
+      if (refs.galleryList.childElementCount <= 0) {
+        showNotification('No images found.');
       }
-    }, 1000);
-  } catch (error) {
-    console.error('An unexpected error occurred.');
-  }
+
+      if (refs.extensionButton) {
+        refs.extensionButton.classList.remove('extentionButton');
+        refs.extensionButton.classList.add('div-button');
+      }
+    } catch (error) {
+      console.error('Error fetching or updating images:', error);
+      showNotification('An error occurred while fetching images.');
+    } finally {
+      showLoader(false);
+    }
+  }, 1000);
 });
 
-refs.extensionButton.addEventListener('click', async () => {
+refs.extensionButton.addEventListener('click', async event => {
+  event.preventDefault();
   showLoader(true);
 
   setTimeout(async () => {
     try {
       const images = await fetchImageData(userSearchRequestValue);
+
       updatNeweUi(images);
+
       updateButtonUi();
     } catch (error) {
       console.error('Error fetching or updating images:', error);
@@ -67,6 +66,5 @@ refs.extensionButton.addEventListener('click', async () => {
     } finally {
       showLoader(false);
     }
-    console.log('1234');
   }, 1000);
 });
