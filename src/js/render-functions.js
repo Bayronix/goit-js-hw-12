@@ -2,7 +2,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { totalPages, pages } from './pixabay-api';
+import { totalPages, pages, limit } from './pixabay-api';
 import { refs } from '../main';
 
 //
@@ -95,7 +95,7 @@ export function updateUi(arrayImages) {
   initializeLightbox().refresh();
 }
 
-export function updatNeweUi(arrayImages) {
+export function updateNewUi(arrayImages) {
   const gallery = document.querySelector('.gallery-list');
   const markup = arrayImages
     .map(
@@ -139,6 +139,8 @@ export function updatNeweUi(arrayImages) {
 }
 
 export function updateButtonUi() {
+  console.log(totalPages);
+  console.log(pages);
   if (pages >= totalPages) {
     refs.extensionButton.remove();
     iziToast.error({

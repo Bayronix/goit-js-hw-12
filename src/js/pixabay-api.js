@@ -1,21 +1,22 @@
 import axios from 'axios';
 
-export let limit = 20;
+export let limit = 10;
 export let pages = 1;
 export const totalPages = Math.ceil(100 / limit);
 
-export async function fetchImageData(searchRequest) {
+export async function fetchImageData(searchRequest, page = 1) {
   const urlOptions = {
     http: 'https://pixabay.com/api/',
     key: '43793393-3131be18ae161d81d2e9721c8',
     options: 'image_type=photo&orientation=horizontal&safesearch=true',
   };
+
   const params = {
     key: urlOptions.key,
     q: searchRequest,
     per_page: limit,
-    page: pages,
-    ...urlOptions.options,
+    page: page,
+    ...Object.fromEntries(new URLSearchParams(urlOptions.options)),
   };
 
   try {
@@ -24,7 +25,6 @@ export async function fetchImageData(searchRequest) {
     if (response.status !== 200) {
       throw new Error('Network response was not ok.');
     }
-    pages += 1;
 
     const { data } = response;
     const images = data.hits;
