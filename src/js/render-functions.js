@@ -2,8 +2,8 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { totalPages, pages, limit } from './pixabay-api';
-import { refs } from '../main';
+import { totalPages, page, limit } from './pixabay-api';
+import { refs, currentPage } from '../main';
 
 //
 
@@ -139,9 +139,7 @@ export function updateNewUi(arrayImages) {
 }
 
 export function updateButtonUi() {
-  console.log(totalPages);
-  console.log(pages);
-  if (pages >= totalPages) {
+  if (currentPage >= totalPages) {
     refs.extensionButton.remove();
     iziToast.error({
       position: 'topRight',

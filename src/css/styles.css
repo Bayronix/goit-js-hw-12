@@ -271,7 +271,7 @@ button.is-disable {
   width: 120px;
   height: 12px;
 
-  color: red;
+  color: #4e75ff;
   border: 2px solid;
   position: relative;
   display: none;
