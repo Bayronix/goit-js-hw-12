@@ -93,7 +93,6 @@ export function updateUi(arrayImages) {
   gallery.innerHTML = markup;
   initializeLightbox().refresh();
 }
-
 export function updateNewUi(arrayImages) {
   const gallery = document.querySelector('.gallery-list');
   const markup = arrayImages
