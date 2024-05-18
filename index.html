@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg"
+      type="image/x-icon"
+    />
+    
+    <title>Homework 12</title>
+    <script type="module" crossorigin src="/goit-js-hw-12/commonHelpers.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-09d7c26e.js">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/vendor-1cd1f9d9.css">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-388d9f17.css">
+  </head>
+  <body>
+    <main>
+      <section class="gallery">
+        <div class="container">
+          <div class="search-bar">
+            <form class="search-bar-form">
+              <label class="search-label">
+                <input
+                  type="text"
+                  id="search-bar"
+                  placeholder="Search images..."
+                />
+                <div
+                  class="search-tooltip"
+                  data-text="Provide your keyword for searching, ex: dog, cat, etc."
+                >
+                  <svg class="search-tooltip-icon" width="18" height="18"></svg>
+                </div>
+              </label>
+              <button class="searchButton" type="submit">Search</button>
+            </form>
+            <div class="loader"></div>
+          </div>
+          <ul class="gallery-list"></ul>
+        </div>
+      </section>
+      <div class="div-button">
+        <button class="extentionButton" type="submit">Extend</button>
+      </div>
+    </main>
+
+    
+  </body>
+</html>
