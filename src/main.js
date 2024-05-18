@@ -36,17 +36,13 @@ refs.searchForm.addEventListener('submit', async event => {
       updateUi(images);
       if (refs.galleryList.childElementCount <= 0) {
         showNotification('No images found.');
-        refs.extensionButton.classList.remove('extentionButton');
-      }
-
-      if (refs.extensionButton) {
+      } else if (refs.extensionButton) {
         refs.extensionButton.classList.remove('extentionButton');
         refs.extensionButton.classList.add('div-button');
       }
     } catch (error) {
       console.error('Error fetching or updating images:', error);
       showNotification('An error occurred while fetching images.');
-      refs.extensionButton.remove();
     } finally {
       showLoader(false);
     }
@@ -69,6 +65,8 @@ if (!refs.extensionButton.dataset.listenerAttached) {
         );
         updateNewUi(images);
         updateButtonUi();
+
+        scrollGallery();
       } catch (error) {
         console.error('Error fetching or updating images:', error);
       } finally {
@@ -76,4 +74,26 @@ if (!refs.extensionButton.dataset.listenerAttached) {
       }
     }, 1000);
   });
+}
+
+function scrollGallery() {
+  const rect = refs.galleryList.getBoundingClientRect();
+  const scrollDistance = rect.height * 2;
+  const scrollSpeed = 100;
+  const scrollStep = scrollDistance / (1000 / scrollSpeed);
+
+  let scrolled = 0;
+
+  const scrollInterval = setInterval(() => {
+    window.scrollBy({
+      top: scrollStep,
+      left: 0,
+      behavior: 'smooth',
+    });
+    scrolled += scrollStep;
+
+    if (scrolled >= scrollDistance) {
+      clearInterval(scrollInterval);
+    }
+  }, scrollSpeed);
 }

@@ -2,12 +2,9 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { totalPages, page, limit } from './pixabay-api';
+import { totalPages } from './pixabay-api';
 import { refs, currentPage } from '../main';
 
-//
-
-// Function: initialize Lightbox
 function initializeLightbox() {
   return new SimpleLightbox('.image-card-link', {
     caption: true,
@@ -19,7 +16,6 @@ function initializeLightbox() {
   });
 }
 
-// Function: initialize iziToast
 function initializeIziToast() {
   iziToast.settings({
     timeout: 5000,
@@ -32,26 +28,29 @@ function initializeIziToast() {
 }
 
 // Function: show notification
-export function showNotification() {
-  initializeIziToast();
+let notificationShown = false;
 
-  iziToast.error({
-    message: `Sorry, there are no images matching your search query. Please try again!`,
-    class: 'error-notification',
-    timeout: 5000,
-    iconUrl: '/img/octagon.svg',
-    titleColor: '#fff',
-    position: 'topRight',
-    backgroundColor: '#EF4040',
-    messageColor: '#fff',
-    progressBarColor: '#B51B1B',
-    close: true,
-  });
+export function showNotification(message) {
+  if (!notificationShown) {
+    initializeIziToast();
+
+    iziToast.error({
+      message:
+        message ||
+        `Sorry, there are no images matching your search query. Please try again!`,
+      class: 'error-notification',
+      timeout: 5000,
+      iconUrl: '/img/octagon.svg',
+      titleColor: '#fff',
+      position: 'topRight',
+      backgroundColor: 'red',
+      messageColor: '#fff',
+      progressBarColor: '#B51B1B',
+      close: true,
+    });
+  }
 }
 
-//
-
-// Function: update UI
 export function updateUi(arrayImages) {
   const gallery = document.querySelector('.gallery-list');
   const markup = arrayImages
@@ -144,11 +143,19 @@ export function updateButtonUi() {
     iziToast.error({
       position: 'topRight',
       message: "We're sorry, there are no more posts to load",
+      class: 'error-notification',
+      timeout: 5000,
+      iconUrl: '/img/octagon.svg',
+      titleColor: '#fff',
+      position: 'topRight',
+      backgroundColor: 'red',
+      messageColor: '#fff',
+      progressBarColor: '#B51B1B',
+      close: true,
     });
   }
 }
 
-// Function: get user input
 export function getUserValue(event) {
   const button = document.querySelector('button');
   const value = event.target.value;
@@ -164,7 +171,6 @@ export function getUserValue(event) {
   }
 }
 
-// Function: show loader
 export function showLoader(status) {
   const loader = document.querySelector('.loader');
   loader.classList.toggle('is-active', status);
