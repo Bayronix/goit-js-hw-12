@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export let limit = 20;
+export let limit = 10;
 export let page = 1;
 export const totalPages = Math.ceil(100 / limit);
 
