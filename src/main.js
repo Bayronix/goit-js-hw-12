@@ -36,6 +36,7 @@ refs.searchForm.addEventListener('submit', async event => {
       updateUi(images);
       if (refs.galleryList.childElementCount <= 0) {
         showNotification('No images found.');
+        refs.extensionButton.classList.add('extentionButton');
       } else if (refs.extensionButton) {
         refs.extensionButton.classList.remove('extentionButton');
         refs.extensionButton.classList.add('div-button');
