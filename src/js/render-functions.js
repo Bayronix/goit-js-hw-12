@@ -53,7 +53,9 @@ export function showNotification(message) {
 
 export function updateUi(arrayImages) {
   const gallery = document.querySelector('.gallery-list');
+
   const markup = arrayImages
+
     .map(
       ({
         webformatURL,
@@ -90,50 +92,7 @@ export function updateUi(arrayImages) {
     )
     .join('');
 
-  gallery.innerHTML = markup;
-  initializeLightbox().refresh();
-}
-
-export function updateNewUi(arrayImages) {
-  const gallery = document.querySelector('.gallery-list');
-  const markup = arrayImages
-    .map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => {
-        return `<li class="image-card">
-              <a href="${largeImageURL}" class="image-card-link"><img src="${webformatURL}" width="360" height="200" class="image-card-thumb" alt="${tags}">
-                <ul class="image-card-details-list">
-                  <li class="image-card-details-list-item">
-                      <p class="image-card-details-title">Likes</p>
-                      <p class="image-card-details-text">${likes}</p>
-                  </li>
-                  <li class="image-card-details-list-item">
-                      <p class="image-card-details-title">Views</p>
-                      <p class="image-card-details-text">${views}</p>
-                  </li>
-                  <li class="image-card-details-list-item">
-                      <p class="image-card-details-title">Comments</p>
-                      <p class="image-card-details-text">${comments}</p>
-                  </li>
-                  <li class="image-card-details-list-item">
-                      <p class="image-card-details-title">Downloads</p>
-                      <p class="image-card-details-text">${downloads}</p>
-                  </li>
-                </ul>
-              </a>
-          </li>`;
-      }
-    )
-    .join('');
-
-  gallery.innerHTML += markup;
+  gallery.insertAdjacentHTML('beforeend', markup);
   initializeLightbox().refresh();
 }
 

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export let limit = 10;
+export let limit = 15;
 export let page = 1;
-export const totalPages = Math.ceil(100 / limit);
+export let totalPages = 0;
 
 export async function fetchImageData(searchRequest, page) {
   const urlOptions = {
@@ -20,15 +20,11 @@ export async function fetchImageData(searchRequest, page) {
   };
 
   try {
-    const response = await axios.get(urlOptions.http, { params });
-
-    if (response.status !== 200) {
-      throw new Error('Network response was not ok.');
+    const { data } = await axios.get(urlOptions.http, { params });
+    if (data.totalHits) {
+      totalPages = Math.ceil(data.totalHits / limit);
     }
-
-    const { data } = response;
-    const images = data.hits;
-    return images;
+    return data.hits;
   } catch (error) {
     console.error('Error fetching image data:', error);
     throw error;
