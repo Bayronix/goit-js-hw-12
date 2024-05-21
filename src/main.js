@@ -32,6 +32,7 @@ if (!refs.searchForm.dataset.listenerAttached) {
     userSearchRequestValue = refs.searchInput.value.trim();
     currentPage = 1;
     if (userSearchRequestValue === '') {
+      refs.extensionButton.style.display = 'none';
       showNotification('Please enter a search term.');
       return;
     }
@@ -55,7 +56,7 @@ if (!refs.searchForm.dataset.listenerAttached) {
           refs.extensionButton.classList.remove('extentionButton');
           refs.extensionButton.classList.add('div-button');
         } else {
-          refs.extensionButton.style.display = 'none'; // Приховуємо кнопку, якщо немає зображень для відображення
+          refs.extensionButton.style.display = 'none';
         }
       } catch (error) {
         console.error('Error fetching or updating images:', error);
