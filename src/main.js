@@ -9,7 +9,6 @@ import {
   showLoader,
 } from './js/render-functions';
 
-let limit = 15;
 export let userSearchRequestValue = '';
 export let currentPage = 1;
 
