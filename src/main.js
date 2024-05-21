@@ -1,4 +1,6 @@
+import './js/pixabay-api';
 import { fetchImageData } from './js/pixabay-api';
+import './js/render-functions';
 import {
   showNotification,
   updateUi,
@@ -13,9 +15,7 @@ export const refs = {
   galleryList: document.querySelector('.gallery-list'),
   extensionButton: document.querySelector('.extentionButton'),
 };
-export let limit = 15;
-export let page = 1;
-export let totalPages = 0;
+
 let userSearchRequestValue = '';
 export let currentPage = 1;
 
@@ -46,12 +46,16 @@ if (!refs.searchForm.dataset.listenerAttached) {
           currentPage
         );
         updateUi(images);
-        if (images.length === 0) {
+        if (refs.galleryList.childElementCount <= 0) {
           showNotification('No images found.');
-        } else {
+        }
+
+        if (images.length > 0) {
           refs.extensionButton.style.display = 'block';
           refs.extensionButton.classList.remove('extentionButton');
           refs.extensionButton.classList.add('div-button');
+        } else {
+          refs.extensionButton.style.display = 'none'; // Приховуємо кнопку, якщо немає зображень для відображення
         }
       } catch (error) {
         console.error('Error fetching or updating images:', error);
@@ -81,7 +85,6 @@ if (!refs.extensionButton.dataset.listenerAttached) {
           currentPage
         );
         updateUi(images);
-
         updateButtonUi();
 
         scrollGallery();

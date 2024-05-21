@@ -2,7 +2,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { totalPages } from '../main';
+import { totalPages } from './pixabay-api';
 import { refs, currentPage } from '../main';
 
 function initializeLightbox() {
@@ -99,7 +99,6 @@ export function updateUi(arrayImages) {
 export function updateButtonUi() {
   if (currentPage >= totalPages) {
     refs.extensionButton.style.display = 'none';
-
     iziToast.error({
       position: 'topRight',
       message: "We're sorry, there are no more posts to load",
