@@ -2,8 +2,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { totalPages } from './pixabay-api';
-import { refs, currentPage } from '../main';
+import { totalPages, refs, currentPage } from '../main';
 
 function initializeLightbox() {
   return new SimpleLightbox('.image-card-link', {
@@ -27,17 +26,16 @@ function initializeIziToast() {
   });
 }
 
-// Function: show notification
 let notificationShown = false;
 
-export function showNotification(message) {
+export function showNotification(
+  message = 'Sorry, there are no images matching your search query. Please try again!'
+) {
   if (!notificationShown) {
     initializeIziToast();
 
     iziToast.error({
-      message:
-        message ||
-        `Sorry, there are no images matching your search query. Please try again!`,
+      message,
       class: 'error-notification',
       timeout: 5000,
       iconUrl: '/img/octagon.svg',
@@ -48,6 +46,8 @@ export function showNotification(message) {
       progressBarColor: '#B51B1B',
       close: true,
     });
+
+    notificationShown = true;
   }
 }
 
@@ -55,7 +55,6 @@ export function updateUi(arrayImages) {
   const gallery = document.querySelector('.gallery-list');
 
   const markup = arrayImages
-
     .map(
       ({
         webformatURL,
@@ -65,30 +64,30 @@ export function updateUi(arrayImages) {
         views,
         comments,
         downloads,
-      }) => {
-        return `<li class="image-card">
-              <a href="${largeImageURL}" class="image-card-link"><img src="${webformatURL}" width="360" height="200" class="image-card-thumb" alt="${tags}">
-                <ul class="image-card-details-list">
-                  <li class="image-card-details-list-item">
-                      <p class="image-card-details-title">Likes</p>
-                      <p class="image-card-details-text">${likes}</p>
-                  </li>
-                  <li class="image-card-details-list-item">
-                      <p class="image-card-details-title">Views</p>
-                      <p class="image-card-details-text">${views}</p>
-                  </li>
-                  <li class="image-card-details-list-item">
-                      <p class="image-card-details-title">Comments</p>
-                      <p class="image-card-details-text">${comments}</p>
-                  </li>
-                  <li class="image-card-details-list-item">
-                      <p class="image-card-details-title">Downloads</p>
-                      <p class="image-card-details-text">${downloads}</p>
-                  </li>
-                </ul>
-              </a>
-          </li>`;
-      }
+      }) => `
+    <li class="image-card">
+      <a href="${largeImageURL}" class="image-card-link">
+        <img src="${webformatURL}" width="360" height="200" class="image-card-thumb" alt="${tags}">
+        <ul class="image-card-details-list">
+          <li class="image-card-details-list-item">
+            <p class="image-card-details-title">Likes</p>
+            <p class="image-card-details-text">${likes}</p>
+          </li>
+          <li class="image-card-details-list-item">
+            <p class="image-card-details-title">Views</p>
+            <p class="image-card-details-text">${views}</p>
+          </li>
+          <li class="image-card-details-list-item">
+            <p class="image-card-details-title">Comments</p>
+            <p class="image-card-details-text">${comments}</p>
+          </li>
+          <li class="image-card-details-list-item">
+            <p class="image-card-details-title">Downloads</p>
+            <p class="image-card-details-text">${downloads}</p>
+          </li>
+        </ul>
+      </a>
+    </li>`
     )
     .join('');
 
@@ -99,8 +98,8 @@ export function updateUi(arrayImages) {
 export function updateButtonUi() {
   if (currentPage >= totalPages) {
     refs.extensionButton.style.display = 'none';
+
     iziToast.error({
-      position: 'topRight',
       message: "We're sorry, there are no more posts to load",
       class: 'error-notification',
       timeout: 5000,
@@ -117,17 +116,17 @@ export function updateButtonUi() {
 
 export function getUserValue(event) {
   const button = document.querySelector('button');
-  const value = event.target.value;
+  const value = event.target.value.trim();
 
   if (value) {
     button.classList.remove('is-disable');
     button.removeAttribute('disabled');
-    return value;
   } else {
     button.classList.add('is-disable');
     button.setAttribute('disabled', '');
-    return '';
   }
+
+  return value;
 }
 
 export function showLoader(status) {

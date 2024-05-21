@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-export let limit = 15;
-export let page = 1;
-export let totalPages = 0;
-
-export async function fetchImageData(searchRequest, page) {
+export async function fetchImageData(
+  searchRequest,
+  page,
+  limit = 15,
+  totalPages = 0
+) {
   const urlOptions = {
     http: 'https://pixabay.com/api/',
     key: '43793393-3131be18ae161d81d2e9721c8',

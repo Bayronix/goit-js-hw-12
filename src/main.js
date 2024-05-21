@@ -16,8 +16,10 @@ export const refs = {
   extensionButton: document.querySelector('.extentionButton'),
 };
 
-let userSearchRequestValue = '';
+export let userSearchRequestValue = '';
 export let currentPage = 1;
+export let limit = 15;
+export let totalPages = 0;
 
 function clearGallery() {
   refs.galleryList.innerHTML = '';
@@ -44,7 +46,8 @@ if (!refs.searchForm.dataset.listenerAttached) {
       try {
         const images = await fetchImageData(
           userSearchRequestValue,
-          currentPage
+          currentPage,
+          limit
         );
         updateUi(images);
         if (refs.galleryList.childElementCount <= 0) {
@@ -83,7 +86,8 @@ if (!refs.extensionButton.dataset.listenerAttached) {
       try {
         const images = await fetchImageData(
           userSearchRequestValue,
-          currentPage
+          currentPage,
+          limit
         );
         updateUi(images);
         updateButtonUi();
