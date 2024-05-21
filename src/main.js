@@ -1,6 +1,7 @@
 import './js/pixabay-api';
 import { fetchImageData } from './js/pixabay-api';
 import './js/render-functions';
+import { refs } from './js/refs';
 import {
   showNotification,
   updateUi,
@@ -8,18 +9,9 @@ import {
   showLoader,
 } from './js/render-functions';
 
-export const refs = {
-  searchForm: document.querySelector('.search-bar-form'),
-  searchInput: document.querySelector('#search-bar'),
-  searchButton: document.querySelector('button'),
-  galleryList: document.querySelector('.gallery-list'),
-  extensionButton: document.querySelector('.extentionButton'),
-};
-
+let limit = 15;
 export let userSearchRequestValue = '';
 export let currentPage = 1;
-export let limit = 15;
-export let totalPages = 0;
 
 function clearGallery() {
   refs.galleryList.innerHTML = '';

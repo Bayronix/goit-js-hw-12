@@ -2,7 +2,8 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { totalPages, refs, currentPage } from '../main';
+import { refs } from './refs';
+import { currentPage } from '../main';
 
 function initializeLightbox() {
   return new SimpleLightbox('.image-card-link', {
@@ -96,7 +97,7 @@ export function updateUi(arrayImages) {
 }
 
 export function updateButtonUi() {
-  if (currentPage >= totalPages) {
+  if (currentPage >= window.totalPages) {
     refs.extensionButton.style.display = 'none';
 
     iziToast.error({
