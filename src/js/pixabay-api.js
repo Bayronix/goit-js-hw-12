@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 export let limit = 15;
 export let page = 1;
 export let totalPages = 0;
@@ -19,14 +18,9 @@ export async function fetchImageData(searchRequest, page) {
     ...Object.fromEntries(new URLSearchParams(urlOptions.options)),
   };
 
-  try {
-    const { data } = await axios.get(urlOptions.http, { params });
-    if (data.totalHits) {
-      totalPages = Math.ceil(data.totalHits / limit);
-    }
-    return data.hits;
-  } catch (error) {
-    console.error('Error fetching image data:', error);
-    throw error;
+  const { data } = await axios.get(urlOptions.http, { params });
+  if (data.totalHits) {
+    totalPages = Math.ceil(data.totalHits / limit);
   }
+  return data.hits;
 }
