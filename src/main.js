@@ -8,6 +8,7 @@ import {
   updateButtonUi,
   showLoader,
 } from './js/render-functions';
+
 export let limit = 15;
 export let userSearchRequestValue = '';
 export let currentPage = 1;
@@ -27,6 +28,7 @@ if (!refs.searchForm.dataset.listenerAttached) {
     if (userSearchRequestValue === '') {
       refs.extensionButton.style.display = 'none';
       showNotification('Please enter a search term.');
+
       return;
     }
 

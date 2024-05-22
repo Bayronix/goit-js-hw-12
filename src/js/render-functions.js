@@ -2,6 +2,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+
 import { refs } from './refs';
 import { currentPage } from '../main';
 
@@ -32,24 +33,20 @@ let notificationShown = false;
 export function showNotification(
   message = 'Sorry, there are no images matching your search query. Please try again!'
 ) {
-  if (!notificationShown) {
-    initializeIziToast();
+  initializeIziToast();
 
-    iziToast.error({
-      message,
-      class: 'error-notification',
-      timeout: 5000,
-      iconUrl: '/img/octagon.svg',
-      titleColor: '#fff',
-      position: 'topRight',
-      backgroundColor: 'red',
-      messageColor: '#fff',
-      progressBarColor: '#B51B1B',
-      close: true,
-    });
-
-    notificationShown = true;
-  }
+  iziToast.error({
+    message,
+    class: 'error-notification',
+    timeout: 5000,
+    iconUrl: '/img/octagon.svg',
+    titleColor: '#fff',
+    position: 'topRight',
+    backgroundColor: 'red',
+    messageColor: '#fff',
+    progressBarColor: '#B51B1B',
+    close: true,
+  });
 }
 
 export function updateUi(arrayImages) {
